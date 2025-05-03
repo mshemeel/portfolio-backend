@@ -4,8 +4,8 @@
   "description": "Utility scripts for the portfolio backend",
   "main": "index.js",
   "scripts": {
-    "import-data": "node scripts/import-data.js",
-    "start-local-mongodb": "node scripts/start-local-mongodb.js",
+    "import-data": "node import-data.js",
+    "start-local-mongodb": "node start-local-mongodb.js",
     "import-to-local": "MONGODB_URI=mongodb://localhost:27017/portfolio_db npm run import-data"
   },
   "dependencies": {
