@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-backend-utils",
+  "version": "1.0.0",
+  "description": "Utility scripts for the portfolio backend",
+  "main": "index.js",
+  "scripts": {
+    "import-data": "node scripts/import-data.js",
+    "start-local-mongodb": "node scripts/start-local-mongodb.js",
+    "import-to-local": "MONGODB_URI=mongodb://localhost:27017/portfolio_db npm run import-data"
+  },
+  "dependencies": {
+    "mongodb": "^5.1.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  }
+} 

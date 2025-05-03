@@ -1,0 +1,98 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+  compression:
+    enabled: true
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  application:
+    name: portfolio-backend
+  data:
+    mongodb:
+      uri: ${MONGO_URL}
+      database: portfolio_db
+      auto-index-creation: true
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=100,expireAfterWrite=3600s
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.shemeel.portfolio: DEBUG
+    org.springframework.data.mongodb: INFO
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/portfolio-backend.log
+
+# Springdoc OpenAPI Configuration
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    tryItOutEnabled: true
+    filter: true
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  packages-to-scan: com.shemeel.portfolio.controller
+  show-actuator: true
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+
+# Rate Limiting Configuration
+resilience4j:
+  ratelimiter:
+    instances:
+      default:
+        limitForPeriod: 100
+        limitRefreshPeriod: 1h
+        timeoutDuration: 0
+        registerHealthIndicator: true
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+  health:
+    mongodb:
+      enabled: true
+
+# Cache Configuration
+caffeine:
+  specs:
+    profile:
+      expireAfterWrite: 3600 # 1 hour
+      maximumSize: 100
+    header:
+      expireAfterWrite: 3600 # 1 hour
+      maximumSize: 100
+    footer:
+      expireAfterWrite: 3600 # 1 hour
+      maximumSize: 100
+
+# API Key Configuration
+api:
+  key:
+    header: X-API-Key
+    default: default-api-key-123 
